@@ -1,0 +1,49 @@
+# 日本語の設定
+export LANG="ja_JP.UTF-8"
+
+# 補完機能の設定
+autoload -U compinit
+compinit
+
+# プロンプトの設定
+PROMPT="%{[31m%}%/%%%{[m%} "
+PROMPT2="%{[31m%}%_%%%{[m%} "
+SPROMPT="%{[31m%}%r is correct? [n,y,a,e]:%{[m%} "
+[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+    PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
+
+# コマンド履歴
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_dups
+setopt share_history
+
+# キーバインドの設定
+bindkey -e
+
+# 履歴検索機能のショートカットの設定
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "" history-beginning-search-backward-end
+bindkey "" history-beginning-search-forward-end
+
+# ssh-agentの設定
+echo -n "ssh-agent: "
+source ~/.ssh-agent-info
+ssh-add -l >&/dev/null
+if [ $? -eq 2 ] ; then
+    echo -n "ssh-agent: restert..."
+    ssh-agent >~/.ssh-agent-info
+    source ~/.ssh-agent-info
+fi
+if ssh-add -l >&/dev/null ; then
+    echo "ssh-agent: Identity is already stored."
+else
+    ssh-add
+fi
+
+# emacsの設定
+alias e='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs'
+alias enw='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs -nw'
