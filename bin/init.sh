@@ -18,8 +18,10 @@ if [ -e ~/.emacs.d ]; then
             ln -s $DOTFILES/emacs/ ~/.emacs.d
             ;;
         n)
+            echo "not replaced"
             ;;
         *)
+            echo "not replaced"
             ;;
     esac
 else
@@ -46,8 +48,10 @@ if [ -e ~/.quicklisp ]; then
             ln -s $DOTFILES/quicklisp/ ~/.quicklisp
             ;;
         n)
+            echo "not replaced"
             ;;
         *)
+            echo "not replaced"
             ;;
     esac
 else
@@ -56,3 +60,23 @@ fi
 
 ## sbcl
 ln -si $DOTFILES/sbcl/sbclrc ~/.sbclrc
+
+## lein
+if [ -e ~/.lein ]; then
+   echo "replace ~/.lein?"
+   read answer
+   case $answer in
+       y)
+           rm -r ~/.lein
+           ln -s $DOTFILES/lein/ ~/.lein
+           ;;
+       n)
+           echo "not replaced"
+           ;;
+       *)
+           echo "not replaced"
+           ;;
+   esac
+else
+    ln -si $DOTFILES/lein/ ~/.lein
+fi
