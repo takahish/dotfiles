@@ -100,9 +100,20 @@
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
 ;; scala-modeの設定
-(setenv "JAVA_TOOL_OPTIONS" "-Dfile.encoding=UTF-8") ;; Javaの文字コードをUTF-8に設定
 (setq scala-interpreter "/usr/local/bin/scala") ;; scalaの処理系を設定
 (require 'scala-mode-auto)
 (add-hook 'scala-mode-hook
 	  (lambda ()
 	    (scala-electric-mode)))
+
+;; clojure-modeの設定
+;; Emacs 23ではpackage.elを事前時インストールする必要あり
+;; （Emacs 24ではpackage.elは組み込まれている）
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+(unless (package-installed-p 'clojure-mode)
+  (package-refresh-contents)
+  (package-install 'clojure-mode))
+(add-hook 'clojure-mode-hook 'paredit-mode)
