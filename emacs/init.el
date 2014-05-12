@@ -40,6 +40,9 @@
 (define-key global-map [?¥] [?\\]) ;; ¥の代わりにバックスラッシュを入力する
 (setq locale-coding-system 'utf-8) ;; ansi-termでの日本語の設定
 
+;; 色（theme）の設定
+(load-theme 'misterioso t)
+
 ;; anythingの設定
 (require 'anything-startup)
 (require 'anything-match-plugin)
@@ -69,11 +72,6 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
-
-;; 色（theme）の設定
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-classic)
 
 ;; SLIMEの設定
 (setq inferior-lisp-program "/usr/local/bin/sbcl") ;; SBCLをCommon Lisp処理系に設定
