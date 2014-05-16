@@ -8,6 +8,7 @@ DOTFILES=$1
 
 
 ##### Set directories #####
+ECHO "set directories"
 ### src
 if [ ! -d ~/src ] ; then
     mkdir ~/src
@@ -21,6 +22,8 @@ fi
 ### tmp
 if [ ! -d ~/tmp ]; then
     mkdir ~/tmp
+    ln -si $DOTFILES/cron/crontab ~/.crontab
+    crontab ~/.crontab
 fi
 
 ### works
