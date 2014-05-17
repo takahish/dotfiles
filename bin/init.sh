@@ -6,179 +6,179 @@
 # DOTFILES is dotfiles dir.
 DOTFILES=$1
 
+# commands
+ECHO=/bin/echo
+READ=read
+CURL=`which curl`
+
 
 ##### Set directories #####
-ECHO "set directories"
+$ECHO "set directories"
+
+### bin
+if [ ! -d $HOME/bin ]; then
+    mkdir $HOME/bin
+fi
+
 ### src
-if [ ! -d ~/src ] ; then
-    mkdir ~/src
+if [ ! -d $HOME/src ]; then
+    mkdir $HOME/src
 fi
 
 ### git
-if [ ! -d ~/git ]; then
-    mkdir ~/git
+if [ ! -d $HOME/git ]; then
+    mkdir $HOME/git
 fi
 
 ### tmp
-if [ ! -d ~/tmp ]; then
-    mkdir ~/tmp
-    ln -si $DOTFILES/cron/crontab ~/.crontab
-    crontab ~/.crontab
+if [ ! -d $HOME/tmp ]; then
+    mkdir $HOME/tmp
+    ln -si $DOTFILES/cron/crontab $HOME/.crontab
+    crontab $HOME/.crontab
 fi
 
 ### works
-if [ ! -d ~/works ]; then
-    mkdir ~/works
+if [ ! -d $HOME/works ]; then
+    mkdir $HOME/works
 fi
 ##########
-
-
-##### Set command that is dependent on the environment #####
-### Echo is different in mac and linux.
-if [ `uname` = "Darwin" ]; then
-    ECHO=/bin/echo
-elif [ `uname` = "Linux" ]; then
-    ECHO=echo
-fi
-##########
-
 
 
 ##### Puts symbolic links #####
 ### zsh
 ### install oh-my-zsh
-ECHO -n "set .zshrc? "
-read answer
+$ECHO -n "set .zshrc? "
+$READ answer
 case $answer in
     "y" | "yes")
-        if [ ! -d ~/.oh-my-zsh ]; then
-            ECHO "##### start install oh-my-zsh #####"
-            curl -L http://install.ohmyz.sh | sh
-            ECHO "##### done install oh-my-zsh #####"
+        if [ ! -d $HOME/.oh-my-zsh ]; then
+            $ECHO "##### start install oh-my-zsh #####"
+            $CURL -L http://install.ohmyz.sh | sh
+            $ECHO "##### done install oh-my-zsh #####"
         fi
-        ECHO -n "main machine? "
-        read answer
+        $ECHO -n "main machine? "
+        $READ answer
         case $answer in
             "y" | "yes")
-                ln -si $DOTFILES/zsh/zshrc.main ~/.zshrc
+                ln -si $DOTFILES/zsh/zshrc.main $HOME/.zshrc
                 ;;
             *)
-                ln -si $DOTFILES/zsh/zshrc.sub ~/.zshrc
+                ln -si $DOTFILES/zsh/zshrc.sub $HOME/.zshrc
                 ;;
         esac
         ;;
     *)
-        ECHO "not setting"
+        $ECHO "not setting"
         ;;
 esac
 
 ### emacs
-ECHO -n "set .emacs.d? "
-read answer
+$ECHO -n "set .emacs.d? "
+$READ answer
 case $answer in
     "y" | "yes")
-        if [ -d ~/.emacs.d -o -L ~/.emacs.d ]; then
+        if [ -d $HOME/.emacs.d -o -L $HOME/.emacs.d ]; then
             ### -d, -F, --directory allow the superuser to attempt to hard link directories.
-            ECHO -n "replace ~/.emacs.d? "
-            read answer
+            $ECHO -n "replace $HOME/.emacs.d? "
+            $READ answer
             case $answer in
                 "y" | "yes")
-                    rm -r ~/.emacs.d
-                    ln -s $DOTFILES/emacs/ ~/.emacs.d
+                    rm -r $HOME/.emacs.d
+                    ln -s $DOTFILES/emacs/ $HOME/.emacs.d
                     ;;
                 *)
-                    ECHO "not replaced"
+                    $ECHO "not replaced"
                     ;;
             esac
         else
-            ln -s $DOTFILES/emacs/ ~/.emacs.d
+            ln -s $DOTFILES/emacs/ $HOME/.emacs.d
         fi
         ;;
     *)
-        ECHO "not setting"
+        $ECHO "not setting"
 	;;
 esac
 
 
 ### git
-ECHO -n "set .gitconfig and .gitexclude? "
-read answer
+$ECHO -n "set .gitconfig and .gitexclude? "
+$READ answer
 case $answer in
     "y" | "yes" )
-        ln -si $DOTFILES/git/gitconfig ~/.gitconfig
-        ln -si $DOTFILES/git/gitexclude ~/.gitexclude
+        ln -si $DOTFILES/git/gitconfig $HOME/.gitconfig
+        ln -si $DOTFILES/git/gitexclude $HOME/.gitexclude
         ;;
     *)
-        ECHO "not setting"
+        $ECHO "not setting"
         ;;
 esac        
 
 ### screen
-ECHO -n "set .screenrc? "
-read answer
+$ECHO -n "set .screenrc? "
+$READ answer
 case $answer in
     "y" | "yes" )
-        ln -si $DOTFILES/screen/screenrc ~/.screenrc
+        ln -si $DOTFILES/screen/screenrc $HOME/.screenrc
         ;;
     *)
-        ECHO "not setting"
+        $ECHO "not setting"
         ;;
 esac
 
 ### quicklisp
-ECHO -n "set .quicklisp? "
-read answer
+$ECHO -n "set .quicklisp? "
+$READ answer
 case $answer in
     "y" | "yes" )
-        if [ -d ~/.quicklisp -o -L ~/.quicklisp ]; then
-            ECHO -n "replace ~/.quicklisp? "
-            read answer
+        if [ -d $HOME/.quicklisp -o -L $HOME/.quicklisp ]; then
+            $ECHO -n "replace $HOME/.quicklisp? "
+            $READ answer
             case $answer in
                 y)
-                    rm -r ~/.quicklisp
-                    ln -s $DOTFILES/quicklisp/ ~/.quicklisp
+                    rm -r $HOME/.quicklisp
+                    ln -s $DOTFILES/quicklisp/ $HOME/.quicklisp
                     ;;
                 *)
-                    ECHO "not replaced"
+                    $ECHO "not replaced"
                     ;;
             esac
         else
-            ln -si $DOTFILES/quicklisp/ ~/.quicklisp
+            ln -si $DOTFILES/quicklisp/ $HOME/.quicklisp
         fi
 
         ### lisp interpreter
         ##### sbcl
-        ln -si $DOTFILES/sbcl/sbclrc ~/.sbclrc
+        ln -si $DOTFILES/sbcl/sbclrc $HOME/.sbclrc
         ;;
     *)
-        ECHO "not setting"
+        $ECHO "not setting"
         ;;
 esac
 
 ### lein
-ECHO -n "set .lein? "
-read answer
+$ECHO -n "set .lein? "
+$READ answer
 case $answer in
     "y" | "yes" )
-        if [ -d ~/.lein -o -L ~/.lein ]; then
-            ECHO -n "replace ~/.lein? "
-            read answer
+        if [ -d $HOME/.lein -o -L $HOME/.lein ]; then
+            $ECHO -n "replace $HOME/.lein? "
+            $READ answer
             case $answer in
                 y)
-                    rm -r ~/.lein
-                    ln -s $DOTFILES/lein/ ~/.lein
+                    rm -r $HOME/.lein
+                    ln -s $DOTFILES/lein/ $HOME/.lein
                     ;;
                 *)
-                    ECHO "not replaced"
+                    $ECHO "not replaced"
                     ;;
 
             esac
         else
-            ln -si $DOTFILES/lein/ ~/.lein
+            ln -si $DOTFILES/lein/ $HOME/.lein
         fi
         ;;
     *)
-        ECHO "not setting"
+        $ECHO "not setting"
         ;;
 esac
 ##########
