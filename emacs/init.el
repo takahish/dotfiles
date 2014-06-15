@@ -32,13 +32,23 @@
 (setq transient-mark-mode t) ;; 範囲に色をつける
 (setq scroll-conservatively 1)
 (setq scroll-step 1) ;; スクロールの設定
-(add-to-list 'default-frame-alist
-	     '(font . "-unknown-Takaoゴシック-normal-normal-normal-*-14-*-*-*-d-0-iso10646-1")) ;; デフォルトのフォントの設定
+(setq default-frame-alist '((width . 100)
+                            (height . 35)
+                            (line-spacing . 2)
+                            (font . "fontset-14")))
 ;(setq make-backup-files nil) ;; バックアップファイルを作らない
 (setq auto-save-default nil) ;; 自動保存を行わない
-(set-language-environment "UTF-8") ;; 日本語の設定
 (define-key global-map [?¥] [?\\]) ;; ¥の代わりにバックスラッシュを入力する
 (setq locale-coding-system 'utf-8) ;; ansi-termでの日本語の設定
+
+;; 日本語
+; (prin1 (font-family-list))
+(set-language-environment "UTF-8")
+(set-fontset-font "fontset-default"
+                  'japanese-jisx0208
+                  (font-spec :family "Hiragino Kaku Gothic ProN"))
+(setq face-font-rescale-alist
+      '((".*Hiragino_Kaku_Gothic_ProN.*" . 1.2)))
 
 ;; 色（theme）の設定
 (load-theme 'misterioso t)
