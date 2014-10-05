@@ -10,6 +10,14 @@
 (auto-install-compatibility-setup)
 (setq auto-install-save-confirm nil)
 
+;; package
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
 ;; base
 (setq inhibit-startup-message t)
 (menu-bar-mode nil)
@@ -57,7 +65,13 @@
 (setq anything-quick-update t)
 (setq anything-enable-shortcuts 'alphabet)
 ;;; changed anything prefix key（default F5 a）
-(custom-set-variables '(anything-command-map-prefix-key " a"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(anything-command-map-prefix-key " a")
+ '(safe-local-variable-values (quote ((Syntax . Common-Lisp)))))
 ;;; changed anything display
 (define-key anything-map (kbd "M-n") 'anything-next-source)
 (define-key anything-map (kbd "M-p") 'anything-previous-source)
@@ -81,6 +95,21 @@
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
 
+;; org
+(setq org-log-done 'time)
+
+;; sr-speedbar
+(require 'sr-speedbar)
+(setq sr-speedbar-right-side nil)
+(setq speedbar-use-images nil)
+(sr-speedbar-refresh-turn-off)
+(global-set-key (kbd "C-^") 'sr-speedbar-toggle)
+(add-hook 'speedbar-mode-hook
+          '(lambda ()
+             (speedbar-add-supported-extension
+              '("lisp" "py" "rb" "pl" "scala" "clj" "org" "html" "xml" "*"))))
+(provide 'init_speedbar)
+
 ;; slime
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
 ;(setq inferior-lisp-program "/usr/local/bin/clisp")
@@ -103,19 +132,19 @@
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
 ;; scala-mode
-(setq scala-interpreter "/usr/local/bin/scala")
-(require 'scala-mode-auto)
-(add-hook 'scala-mode-hook
-	  (lambda ()
-	    (scala-electric-mode)))
+(unless (package-installed-p 'ensime)
+  (package-refresh-contents)
+  (package-install 'ensime))
+(require 'ensime)
+(push "/usr/local/bin" exec-path)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 ;; clojure-mode
 ;;; There needs to install package.el in emacs 23
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
 (unless (package-installed-p 'clojure-mode)
   (package-refresh-contents)
   (package-install 'clojure-mode))
 (add-hook 'clojure-mode-hook 'paredit-mode)
+
+;; pig-mode
+(require 'pig-mode)
