@@ -47,23 +47,21 @@ fi
 ##### Puts symbolic links #####
 ### zsh
 ### install oh-my-zsh
-$ECHO -n "set .zshrc? "
+$ECHO -n "set .bashrc? "
 $READ answer
 case $answer in
     "y" | "yes")
-        if [ ! -d $HOME/.oh-my-zsh ]; then
-            $ECHO "##### start install oh-my-zsh #####"
-            $CURL -L http://install.ohmyz.sh | sh
-            $ECHO "##### done install oh-my-zsh #####"
-        fi
+        ln -si $DOTFILES/bash/bash_profile $HOME/.bash_profile
+        ln -si $DOTFILES/bash/git-prompt.sh $HOME/.git-prompt.sh
+        ln -si $DOTFILES/bash/git-completion.bash $HOME/.git-completion.bash
         $ECHO -n "main machine? "
         $READ answer
         case $answer in
             "y" | "yes")
-                ln -si $DOTFILES/zsh/zshrc.main $HOME/.zshrc
+                ln -si $DOTFILES/bash/bashrc.main $HOME/.bashrc
                 ;;
             *)
-                ln -si $DOTFILES/zsh/zshrc.sub $HOME/.zshrc
+                ln -si $DOTFILES/bash/bashrc.sub $HOME/.bashrc
                 ;;
         esac
         ;;
@@ -71,6 +69,33 @@ case $answer in
         $ECHO "not setting"
         ;;
 esac
+
+### zsh
+### install oh-my-zsh
+#$ECHO -n "set .zshrc? "
+#$READ answer
+#case $answer in
+#    "y" | "yes")
+#        if [ ! -d $HOME/.oh-my-zsh ]; then
+#            $ECHO "##### start install oh-my-zsh #####"
+#            $CURL -L http://install.ohmyz.sh | sh
+#            $ECHO "##### done install oh-my-zsh #####"
+#        fi
+#        $ECHO -n "main machine? "
+#        $READ answer
+#        case $answer in
+#            "y" | "yes")
+#                ln -si $DOTFILES/zsh/zshrc.main $HOME/.zshrc
+#                ;;
+#            *)
+#                ln -si $DOTFILES/zsh/zshrc.sub $HOME/.zshrc
+#                ;;
+#        esac
+#        ;;
+#    *)
+#        $ECHO "not setting"
+#        ;;
+#esac
 
 ### emacs
 $ECHO -n "set .emacs.d? "
@@ -126,59 +151,59 @@ case $answer in
 esac
 
 ### quicklisp
-$ECHO -n "set .quicklisp? "
-$READ answer
-case $answer in
-    "y" | "yes" )
-        if [ -d $HOME/.quicklisp -o -L $HOME/.quicklisp ]; then
-            $ECHO -n "replace $HOME/.quicklisp? "
-            $READ answer
-            case $answer in
-                y)
-                    rm -r $HOME/.quicklisp
-                    ln -s $DOTFILES/quicklisp/ $HOME/.quicklisp
-                    ;;
-                *)
-                    $ECHO "not replaced"
-                    ;;
-            esac
-        else
-            ln -si $DOTFILES/quicklisp/ $HOME/.quicklisp
-        fi
-
-        ### lisp interpreter
-        ##### sbcl
-        ln -si $DOTFILES/sbcl/sbclrc $HOME/.sbclrc
-        ;;
-    *)
-        $ECHO "not setting"
-        ;;
-esac
+#$ECHO -n "set .quicklisp? "
+#$READ answer
+#case $answer in
+#    "y" | "yes" )
+#        if [ -d $HOME/.quicklisp -o -L $HOME/.quicklisp ]; then
+#            $ECHO -n "replace $HOME/.quicklisp? "
+#            $READ answer
+#            case $answer in
+#                y)
+#                    rm -r $HOME/.quicklisp
+#                    ln -s $DOTFILES/quicklisp/ $HOME/.quicklisp
+#                    ;;
+#                *)
+#                    $ECHO "not replaced"
+#                    ;;
+#            esac
+#        else
+#            ln -si $DOTFILES/quicklisp/ $HOME/.quicklisp
+#        fi
+#
+#        ### lisp interpreter
+#        ##### sbcl
+#        ln -si $DOTFILES/sbcl/sbclrc $HOME/.sbclrc
+#        ;;
+#    *)
+#        $ECHO "not setting"
+#        ;;
+#esac
 
 ### lein
-$ECHO -n "set .lein? "
-$READ answer
-case $answer in
-    "y" | "yes" )
-        if [ -d $HOME/.lein -o -L $HOME/.lein ]; then
-            $ECHO -n "replace $HOME/.lein? "
-            $READ answer
-            case $answer in
-                y)
-                    rm -r $HOME/.lein
-                    ln -s $DOTFILES/lein/ $HOME/.lein
-                    ;;
-                *)
-                    $ECHO "not replaced"
-                    ;;
-
-            esac
-        else
-            ln -si $DOTFILES/lein/ $HOME/.lein
-        fi
-        ;;
-    *)
-        $ECHO "not setting"
-        ;;
-esac
+#$ECHO -n "set .lein? "
+#$READ answer
+#case $answer in
+#    "y" | "yes" )
+#        if [ -d $HOME/.lein -o -L $HOME/.lein ]; then
+#            $ECHO -n "replace $HOME/.lein? "
+#            $READ answer
+#            case $answer in
+#                y)
+#                    rm -r $HOME/.lein
+#                    ln -s $DOTFILES/lein/ $HOME/.lein
+#                    ;;
+#                *)
+#                    $ECHO "not replaced"
+#                    ;;
+#
+#            esac
+#        else
+#            ln -si $DOTFILES/lein/ $HOME/.lein
+#        fi
+#        ;;
+#    *)
+#        $ECHO "not setting"
+#        ;;
+#esac
 ##########
