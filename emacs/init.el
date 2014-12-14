@@ -107,7 +107,17 @@
 (add-hook 'speedbar-mode-hook
           '(lambda ()
              (speedbar-add-supported-extension
-              '("lisp" "py" "rb" "pl" "scala" "clj" "org" "html" "xml" "*"))))
+              '("lisp"
+                "c"
+                "py"
+                "rb"
+                "pl"
+                "scala"
+                "clj"
+                "org"
+                "html"
+                "xml"
+                "*"))))
 (provide 'init_speedbar)
 
 ;; slime
@@ -130,6 +140,18 @@
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+
+;; global
+;;; not use shipped gtags.el
+;;; M-x auto-install-from-url https://raw.github.com/voins/gtags/master/gtags.el
+;;; M-x auto-install-from-emacs-wiki anything-gtags
+(autoload 'gtags-mode "gtags" "" t)
+(setq gtags-mode-hook
+      '(lambda ()
+         (local-set-key "\M-t" 'gtags-find-tag)
+         (local-set-key "\M-r" 'gtags-find-rtag)
+         (local-set-key "\M-s" 'gtags-find-symbol)
+         (local-set-key "\C-t" 'gtags-pop-stack)))
 
 ;; scala-mode
 (unless (package-installed-p 'ensime)
