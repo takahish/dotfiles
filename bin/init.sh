@@ -52,6 +52,7 @@ $READ answer
 case $answer in
     "y" | "yes")
         ln -si $DOTFILES/bash/bash_profile $HOME/.bash_profile
+        ln -si $DOTFILES/bash/bash_aliases $HOME/.bash_aliases
         ln -si $DOTFILES/bash/git-prompt.sh $HOME/.git-prompt.sh
         ln -si $DOTFILES/bash/git-completion.bash $HOME/.git-completion.bash
         $ECHO -n "main machine? "
