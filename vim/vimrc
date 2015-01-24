@@ -1,0 +1,72 @@
+"" Basic setting
+" Show line number
+set number
+
+" Show tab and space
+set list
+set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+
+" Show match parentheses
+set showmatch
+
+" Sytax highlight
+syntax on
+
+"" NeoBundle setting
+" Reference https://github.com/Shougo/neobundle.vim
+" Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
+
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+
+" Unite
+NeoBundle 'Shougo/unite.vim'
+
+" Color
+NeoBundle 'nanotech/jellybeans.vim'
+
+" Gtags
+NeoBundle 'vim-scripts/gtags.vim'
+
+" Org-mode
+NeoBundle 'jceb/vim-orgmode'
+NeoBundle 'tpope/vim-speeddating'
+
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
+"" Other setting
+" Gtags
+map <C-g> :Gtags
+map <C-h> :Gtags -f %<CR>
+map <C-j> :GtagsCursor<CR>
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>
+
+" Color
+colorscheme jellybeans
+

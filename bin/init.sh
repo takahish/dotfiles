@@ -45,8 +45,7 @@ fi
 
 
 ##### Puts symbolic links #####
-### zsh
-### install oh-my-zsh
+### bash
 $ECHO -n "set .bashrc? "
 $READ answer
 case $answer in
@@ -70,6 +69,29 @@ case $answer in
         $ECHO "not setting"
         ;;
 esac
+
+### vim
+### install nebobundle
+$ECHO -n "set .vimrc? "
+$READ answer
+case $answer in
+    "y" | "yes")
+        if [ ! -d $HOME/.vim/bundle ]; then
+            $ECHO "##### start install Neobundle #####"
+            $CURL https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+            $ECHO "##### done install Neobundle #####"
+        fi
+        ln -si $DOTFILES/vim/vimrc $HOME/.vimrc
+        ;;
+    *)
+        $ECHO "not setting"
+        ;;
+esac
+
+### zsh
+### install oh-my-zsh
+#$ECHO -n "set .zshrc? "
+
 
 ### zsh
 ### install oh-my-zsh
