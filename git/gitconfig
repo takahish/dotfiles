@@ -1,6 +1,6 @@
 [user]
 	name = Takahiro Ishikawa
-	email = qwqkx447@yahoo.co.jp
+	email = takahish.nil@gmail.com
 [color]
 	status = auto
 	diff = auto
@@ -49,4 +49,4 @@
 	logoutputencoding = utf-8
 [core]
 	excludesfile = ~/.gitexclude
-	editor = emacs
+	editor = vim
