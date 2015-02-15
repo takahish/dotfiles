@@ -10,6 +10,7 @@ DOTFILES=$1
 ECHO=/bin/echo
 READ=read
 CURL=`which curl`
+LS=/bin/ls
 
 
 ##### Set directories #####
@@ -19,6 +20,10 @@ $ECHO "set directories"
 if [ ! -d $HOME/bin ]; then
     mkdir $HOME/bin
 fi
+for i in `ls $DOTFILES/bin`
+do
+    ln -si $DOTFILES/bin/$i $HOME/bin/$i
+done
 
 ### src
 if [ ! -d $HOME/src ]; then
