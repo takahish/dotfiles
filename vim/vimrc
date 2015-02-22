@@ -39,6 +39,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Unite
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
 
 " Color
 NeoBundle 'nanotech/jellybeans.vim'
@@ -60,10 +61,20 @@ filetype plugin indent on
 NeoBundleCheck
 
 "" Other setting
+" ESC
+noremap <C-j> <esc>
+noremap! <C-j> <esc>
+
+" Unite
+nmap <Space> [unite]
+nnoremap [unite]f :<C-u>Unite<Space>file<CR>
+nnoremap [unite]m :<C-u>Unite<Space>buffer file_mru<CR>
+nnoremap [unite]b :<C-u>Unite<Space>bookmark<CR>
+
 " Gtags
 map <C-g> :Gtags
 map <C-h> :Gtags -f %<CR>
-map <C-j> :GtagsCursor<CR>
+map <C-b> :GtagsCursor<CR>
 map <C-n> :cn<CR>
 map <C-p> :cp<CR>
 
