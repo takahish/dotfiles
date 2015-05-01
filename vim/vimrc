@@ -61,9 +61,19 @@ filetype plugin indent on
 NeoBundleCheck
 
 "" Other setting
+" Tab
+set tabstop=4
+set autoindent
+set expandtab
+set shiftwidth=4
+
 " ESC
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
+
+" Enter
+noremap <C-k> <CR>
+noremap! <C-k> <CR>
 
 " Unite
 nmap <Space> [unite]
