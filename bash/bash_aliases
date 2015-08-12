@@ -1,8 +1,8 @@
 # emacs
 ## emacs alias is different in mac and linux.
 if [ `uname` = "Darwin" ]; then
-    alias e='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs'
-    alias enw='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs -nw'
+    alias e='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs'
+    alias enw='/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs -nw'
 elif [ `uname` = "Linux" ]; then
     alias e='`which emacs`'
     alias enw='`which emacs` -nw'
