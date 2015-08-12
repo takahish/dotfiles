@@ -7,3 +7,10 @@ fi
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# set GOROOT and GOPATH
+if [ -x "`which go`" ]; then
+    export GOROOT=`go env GOROOT`
+    export GOPATH=$HOME
+    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+fi
