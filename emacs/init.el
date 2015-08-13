@@ -35,6 +35,9 @@
 ;; theme
 (load-theme 'deeper-blue t)
 
+;; load-path
+(add-to-list 'load-path "~/bin")
+
 ;; package
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
@@ -51,12 +54,24 @@
     sr-speedbar
     slime
     ac-slime
-    helm-gtags))
+    helm-gtags
+    go-mode
+    go-autocomplete))
 
-(dolist (package required-packages)
-  (unless (package-installed-p package)
+;; no-installed-packages
+(defun check-installed (pkgs)
+  (if (null pkgs)
+      nil
+    (if (not (package-installed-p (car pkgs)))
+        (cons (car pkgs) (check-installed (cdr pkgs)))
+      (check-installed (cdr pkgs)))))
+
+(let ((not-installed-packages
+       (check-installed required-packages)))
+  (when not-installed-packages
     (package-refresh-contents)
-    (package-install package)))
+    (dolist (package not-installed-packages)
+      (package-install package))))
 
 ;; helm
 (require 'helm-config)
@@ -81,9 +96,12 @@
  '(display-buffer-function 'popwin:display-buffer))
 
 ;; auto-complete
-(require 'auto-complete)
 (require 'auto-complete-config)
+(ac-config-default)
 (global-auto-complete-mode t)
+(custom-set-variables
+ '(ac-use-menu-map t)
+ '(ac-use-fuzzy t))
 
 ;; org
 (custom-set-variables
@@ -116,34 +134,41 @@
                 "txt"))))
 (provide 'init_speedbar)
 
-;; slime
+;; common-lisp
 (setq-default
  inferior-lisp-program "/usr/local/bin/sbcl")
 ; inferior-lisp-program "/usr/local/bin/clisp")
 ; inferior-lisp-program "/usr/local/bin/abcl-no-rlwrap")
 ; inferior-lisp-program "/usr/local/bin/ccl")
 
-(require 'slime)
-(slime-setup '(slime-repl slime-fancy slime-banner))
-;;; popwin on slime
-(push '("*slime-apropos*") popwin:special-display-config)
-(push '("*slime-macroexpansion*") popwin:special-display-config)
-(push '("*slime-description*") popwin:special-display-config)
-(push '("*slime-compilation*" :noselect t) popwin:special-display-config)
-(push '("*slime-xref*") popwin:special-display-config)
-(push '(sldb-mode :stick t) popwin:special-display-config)
-(push '(slime-repl-mode) popwin:special-display-config)
-(push '(slime-connection-list-mode) popwin:special-display-config)
-;;; ac-slime
-(require 'ac-slime)
+;; slime
+(autoload 'slime "slime" nil t)
+(with-eval-after-load 'slime
+  (slime-setup '(slime-repl slime-fancy slime-banner))
+  ;;; popwin on slime
+  (push '("*slime-apropos*") popwin:special-display-config)
+  (push '("*slime-macroexpansion*") popwin:special-display-config)
+  (push '("*slime-description*") popwin:special-display-config)
+  (push '("*slime-compilation*" :noselect t) popwin:special-display-config)
+  (push '("*slime-xref*") popwin:special-display-config)
+  (push '(sldb-mode :stick t) popwin:special-display-config)
+  (push '(slime-repl-mode) popwin:special-display-config)
+  (push '(slime-connection-list-mode) popwin:special-display-config)
+  ;;; ac-slime
+  (require 'ac-slime))
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
 ;; helm-gtags
-(autoload 'helm-gtags-mode "helm-gtags" "" t)
+(autoload 'helm-gtags-mode "helm-gtags" nil t)
 (add-hook 'helm-gtags-mode-hook
-      '(lambda ()
-         (local-set-key "\M-t" 'helm-gtags-find-tag)
-         (local-set-key "\M-r" 'helm-gtags-find-rtag)
-         (local-set-key "\M-s" 'helm-gtags-find-symbol)
-         (local-set-key "\C-t" 'helm-gtags-pop-stack)))
+          '(lambda ()
+             (local-set-key "\M-t" 'helm-gtags-find-tag)
+             (local-set-key "\M-r" 'helm-gtags-find-rtag)
+             (local-set-key "\M-s" 'helm-gtags-find-symbol)
+             (local-set-key "\C-t" 'helm-gtags-pop-stack)))
+
+;; go
+(autoload 'go-mode "go-mode" nil t)
+(with-eval-after-load 'go-mode
+  (require 'go-autocomplete))
