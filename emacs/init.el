@@ -56,7 +56,8 @@
     ac-slime
     helm-gtags
     go-mode
-    go-autocomplete))
+    go-autocomplete
+    yaml-mode))
 
 ;; no-installed-packages
 (defun check-installed (pkgs)
@@ -130,6 +131,7 @@
                 "pig"
                 "html"
                 "xml"
+                "yaml"
                 "org"
                 "txt"))))
 (provide 'init_speedbar)
@@ -168,7 +170,19 @@
              (local-set-key "\M-s" 'helm-gtags-find-symbol)
              (local-set-key "\C-t" 'helm-gtags-pop-stack)))
 
-;; go
+;; go-mode
+;; In advance, install gocode in $GOPATH.
+;;   go get -u github.com/nsf/gocode
+;; exec-path should include a path to $GOPATH/bin.
+;; So DO NOT launch an emacs from App icon, DO launch an emacs from terminal (shell).
 (autoload 'go-mode "go-mode" nil t)
 (with-eval-after-load 'go-mode
   (require 'go-autocomplete))
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+;; yaml-mode
+(autoload 'yaml-mode "yaml-mode" nil t)
+(add-hook 'yaml-mode-hook
+          '(lambda()
+             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
