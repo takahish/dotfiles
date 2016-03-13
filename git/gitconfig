@@ -49,4 +49,4 @@
 	logoutputencoding = utf-8
 [core]
 	excludesfile = ~/.gitexclude
-	editor = vim
+	editor = emacs
