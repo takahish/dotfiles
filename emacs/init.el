@@ -33,7 +33,7 @@
 (recentf-mode t)
 
 ;; theme
-(load-theme 'deeper-blue t)
+(load-theme 'tango t)
 
 ;; load-path
 (add-to-list 'load-path "~/bin")
@@ -169,20 +169,3 @@
              (local-set-key "\M-r" 'helm-gtags-find-rtag)
              (local-set-key "\M-s" 'helm-gtags-find-symbol)
              (local-set-key "\C-t" 'helm-gtags-pop-stack)))
-
-;; go-mode
-;; In advance, install gocode in $GOPATH.
-;;   go get -u github.com/nsf/gocode
-;; exec-path should include a path to $GOPATH/bin.
-;; So DO NOT launch an emacs from App icon, DO launch an emacs from terminal (shell).
-(autoload 'go-mode "go-mode" nil t)
-(with-eval-after-load 'go-mode
-  (require 'go-autocomplete))
-(add-hook 'before-save-hook 'gofmt-before-save)
-
-;; yaml-mode
-(autoload 'yaml-mode "yaml-mode" nil t)
-(add-hook 'yaml-mode-hook
-          '(lambda()
-             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-
