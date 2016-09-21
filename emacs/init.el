@@ -12,6 +12,8 @@
 (setq-default indent-tabs-mode nil)
 (set-language-environment "UTF-8")
 (define-key global-map [?¥] [?\\])
+(set-default-font "Inconsolata-14")
+
 (custom-set-variables
  '(locale-coding-system 'utf-8)
  '(frame-title-format (format "%%b - %s:%%f"  (system-name)))
@@ -33,7 +35,7 @@
 (recentf-mode t)
 
 ;; theme
-(load-theme 'tango t)
+(load-theme 'misterioso t)
 
 ;; load-path
 (add-to-list 'load-path "~/bin")
@@ -51,13 +53,9 @@
   '(helm
     popwin
     auto-complete
-    sr-speedbar
     slime
     ac-slime
-    helm-gtags
-    go-mode
-    go-autocomplete
-    yaml-mode))
+    helm-gtags))
 
 ;; no-installed-packages
 (defun check-installed (pkgs)
@@ -107,34 +105,6 @@
 ;; org
 (custom-set-variables
  '(org-log-done 'time))
-
-;; sr-speedbar
-(require 'sr-speedbar)
-(custom-set-variables
- '(sr-speedbar-right-side nil)
- '(speedbar-use-images nil))
-(sr-speedbar-refresh-turn-off)
-(global-set-key (kbd "C-^") 'sr-speedbar-toggle)
-(add-hook 'speedbar-mode-hook
-          '(lambda ()
-             (speedbar-add-supported-extension
-              '("lisp"
-                "c"
-                "cpp"
-                "java"
-                "py"
-                "rb"
-                "pl"
-                "scala"
-                "clj"
-                "go"
-                "pig"
-                "html"
-                "xml"
-                "yaml"
-                "org"
-                "txt"))))
-(provide 'init_speedbar)
 
 ;; common-lisp
 (setq-default
