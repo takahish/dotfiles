@@ -15,23 +15,38 @@
 (set-default-font "Inconsolata-14")
 
 (custom-set-variables
- '(locale-coding-system 'utf-8)
- '(frame-title-format (format "%%b - %s:%%f"  (system-name)))
- '(inhibit-startup-message t)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ac-use-fuzzy t)
+ '(ac-use-menu-map t)
+ '(auto-save-default nil)
+ '(display-buffer-function (quote popwin:display-buffer))
+ '(frame-title-format (format "%%b - %s:%%f" (system-name)) t)
+ '(helm-command-prefix-key " a")
+ '(helm-display-function (quote helm-split-window))
+ '(helm-enable-shortcuts (quote alphabet))
+ '(helm-quick-update t)
  '(history-length 1000)
- '(undo-limit 100000)
- '(undo-strong-limit 130000)
- '(transient-mark-mode t)
+ '(inhibit-startup-screen t)
+ '(locale-coding-system (quote utf-8) t)
+ '(make-backup-files nil)
+ '(org-log-done (quote time))
+ '(package-selected-packages
+   (quote
+    (yaml-mode sr-speedbar popwin helm-gtags go-mode go-autocomplete ac-slime)))
+ '(recentf-max-saved-items 3000)
+ '(recentf-save-file "~/.emacs.d/recentf")
+ '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
  '(scroll-conservatively 1)
  '(scroll-step 1)
- '(auto-save-default nil)
- '(make-backup-files nil))
+ '(transient-mark-mode t)
+ '(undo-limit 100000)
+ '(undo-strong-limit 130000))
 
 ;; increased resent files
 (require 'recentf nil t)
-(custom-set-variables
- '(recentf-save-file "~/.emacs.d/recentf")
- '(recentf-max-saved-items 3000))
 (recentf-mode t)
 
 ;; theme
@@ -72,6 +87,9 @@
     (dolist (package not-installed-packages)
       (package-install package))))
 
+;; delete-trailing-whitespace
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; helm
 (require 'helm-config)
 (defun helm-split-window (buf)
@@ -79,32 +97,23 @@
   (other-window 1)
   (switch-to-buffer buf))
 ;;; changed prefix key etc
-(custom-set-variables
- '(helm-quick-update t)
- '(helm-enable-shortcuts 'alphabet)
- '(helm-command-prefix-key " a")
- '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
- '(helm-display-function 'helm-split-window))
+
 ;;; changed helm display
 (define-key helm-command-map (kbd "M-n") 'helm-next-source)
 (define-key helm-command-map (kbd "M-p") 'helm-previous-source)
 
 ;; popwin
 (require 'popwin)
-(custom-set-variables
- '(display-buffer-function 'popwin:display-buffer))
+
 
 ;; auto-complete
 (require 'auto-complete-config)
 (ac-config-default)
 (global-auto-complete-mode t)
-(custom-set-variables
- '(ac-use-menu-map t)
- '(ac-use-fuzzy t))
+
 
 ;; org
-(custom-set-variables
- '(org-log-done 'time))
+
 
 ;; common-lisp
 (setq-default
@@ -139,3 +148,9 @@
              (local-set-key "\M-r" 'helm-gtags-find-rtag)
              (local-set-key "\M-s" 'helm-gtags-find-symbol)
              (local-set-key "\C-t" 'helm-gtags-pop-stack)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
